@@ -1,0 +1,7 @@
+<div *ngIf="!patient">
+...loading data
+</div>
+<div (click)="onClick()" *ngIf="patient">
+  <p>Id: {{patient.id}}</p>
+  <p>Name: {{patient.name}}</p>
+</div>
