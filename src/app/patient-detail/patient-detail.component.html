@@ -2,6 +2,7 @@
 ...loading data
 </div>
 <div (click)="onClick()" *ngIf="patient">
-  <p>Id: {{patient.id}}</p>
-  <p>Name: {{patient.name}}</p>
+  <p>Id: {{patient.resource.id}}</p>
+  <p>Name: {{patient.resource.name | patientName}}</p>
 </div>
+<h3>TODO - display a table with observations - option to create observation</h3>

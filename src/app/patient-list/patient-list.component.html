@@ -1,9 +1,16 @@
-<button (click)="onClick()">Refresh patients list</button>
-<ul class="list-unstyled">
-  <li *ngFor="let patient of patients">
-    <div (click)="navigateToPatientDetail(patient)">
-      <p>Id: {{ patient.id }}</p>
-      <p>Name: {{ patient.name }}</p>
+<!-- <button (click)="onClick()">Load patients</button> -->
+<div class="row">
+  <div class="card col-sm-3" *ngFor="let patient of patients">
+    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+    <div class="card-body">
+      <h5 class="card-title"> <a routerLink="/patient-detail/{{patient.resource.id}}" class="card-link"> {{patient.resource.name | patientName }}</a> </h5>
+      <p class="card-text">
+        <b>Birthdate:</b> {{patient.resource.birthDate}}</p>
+      <p class="card-text">
+        <b>Gender:</b> {{patient.resource.gender}}</p>
     </div>
-  </li>
-</ul>
+    <div class="card-footer">
+      <small class="text-muted">lorem ipsum....</small>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,10 @@
+#Development in progress...
+Please feel free to perform code reviews and come up with suggestions
+
+#Github Pages
+
+[Online version] https://gmodrogan.github.io/angular-fhir-observation/
+
 # AngularFhirObservation
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.

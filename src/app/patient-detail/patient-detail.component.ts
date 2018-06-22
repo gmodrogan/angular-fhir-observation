@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MainDataService } from '../services/main-data.service';
 
 @Component({
   selector: 'app-patient-detail',
@@ -9,13 +10,19 @@ import { Router } from '@angular/router';
 export class PatientDetailComponent implements OnInit {
 
   @Input() patient: any
-  constructor(private router: Router) { }
+  constructor(private route: ActivatedRoute, private mainDataService: MainDataService) { }
 
   ngOnInit() {
+    this.getPatient();
   }
 
-  onClick(){
+  getPatient(){
+    const id = this.route.snapshot.paramMap.get('id');
     
+    this.mainDataService.awaitPatient(id)
+      .subscribe(patient => {
+        this.patient = patient;
+      });
   }
 
 }

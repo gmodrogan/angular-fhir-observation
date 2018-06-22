@@ -30,10 +30,10 @@ export class PatientListComponent implements OnInit {
     this.mainDataService.refreshPatients();
   }
 
-  navigateToPatientDetail(patient) {
-    this.router.navigate([
-      'patient-detail', patient.id
-    ]);
-  }
+  // navigateToPatientDetail(patient) {
+  //   this.router.navigate([
+  //     'patient-detail', patient.id
+  //   ]);
+  // }
 
 }
