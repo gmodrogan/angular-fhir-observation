@@ -1,9 +1,9 @@
-#Development in progress...
+# Development in progress...
 Please feel free to perform code reviews and come up with suggestions
 
-#Github Pages
+# Github Pages
 
-[Online version] https://gmodrogan.github.io/angular-fhir-observation/
+[Online sample](https://gmodrogan.github.io/angular-fhir-observation/)
 
 # AngularFhirObservation
 
