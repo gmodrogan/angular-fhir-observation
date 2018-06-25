@@ -26,4 +26,5 @@ import { PatientNamePipe } from './util/patient-name/patient-name.pipe';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+}

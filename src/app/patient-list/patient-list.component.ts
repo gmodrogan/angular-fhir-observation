@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { MainDataService } from '../services/main-data.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient-list',
@@ -12,7 +11,9 @@ export class PatientListComponent implements OnInit {
 
   public patients: any;
 
-  constructor(private mainDataService: MainDataService, private router: Router) { }
+  constructor(private mainDataService: MainDataService) {
+
+   }
 
   ngOnInit() {
     this.getPatients();
