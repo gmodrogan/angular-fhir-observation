@@ -5,6 +5,8 @@ Please feel free to perform code reviews and come up with suggestions
 
 [Online sample](https://gmodrogan.github.io/angular-fhir-observation/)
 
+build command: ng build --prod --output-path docs --base-href /angular-fhir-observation/
+
 # AngularFhirObservation
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
