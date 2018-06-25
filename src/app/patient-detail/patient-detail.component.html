@@ -3,8 +3,9 @@
 <div *ngIf="!patient">
 ...loading data
 </div>
-<div (click)="onClick()" *ngIf="patient">
+<div  *ngIf="patient">
   <p>Id: {{patient.resource.id}}</p>
   <p>Name: {{patient.resource.name | patientName}}</p>
 </div>
-<h3>TODO - display a table with observations - option to create observation</h3>
+
+<app-vitalsign-list></app-vitalsign-list>

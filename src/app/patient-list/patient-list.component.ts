@@ -24,7 +24,7 @@ export class PatientListComponent implements OnInit {
     this.mainDataService.awaitPatients()
       .subscribe(patients => {
         this.patients = patients;
-      })
+      });
   }
 
   onClick() {

@@ -9,6 +9,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { PatientNamePipe } from './util/patient-name/patient-name.pipe';
+import { VitalsignListComponent } from './vitalsign-list/vitalsign-list.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { PatientNamePipe } from './util/patient-name/patient-name.pipe';
     PatientListComponent,
     PatientDetailComponent,
     NotFoundComponent,
-    PatientNamePipe
+    PatientNamePipe,
+    VitalsignListComponent
 ],
   imports: [
     BrowserModule,

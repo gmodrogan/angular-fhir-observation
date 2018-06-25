@@ -1,0 +1,20 @@
+<div>
+  <p>Vitalsign component</p>
+  <table class="table">
+    <thead>
+      <th>#</th>
+      <th>Code</th>
+      <th>Date</th>
+      <th>Value</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vitalsign of vitalsigns; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{vitalsign.resource.code.text}} ({{vitalsign.resource.code.coding[0].system}} --- {{vitalsign.resource.code.coding[0].code}})</td>
+        <td>{{vitalsign.resource.effectiveDateTime | date:'medium'}}</td>
+        <td>{{vitalsign.resource.valueQuantity.value}}{{vitalsign.resource.valueQuantity.code}}</td>
+      </tr>
+    </tbody>
+  </table>
+  TODO: add the vitalsign add route and integrate a code system
+</div>

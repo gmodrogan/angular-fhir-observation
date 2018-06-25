@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 })
 export class MainDataService {
 
-  private fhirClient: FhirClient
+  private fhirClient: FhirClient;
   private config: any = {
     'baseUrl': 'https://hapi.fhir.org/baseDstu3',
     'credentials': 'same-origin',
@@ -27,11 +27,11 @@ export class MainDataService {
   }
 
   awaitPatient(id: string): Observable<any> {
-    var patient$ = new BehaviorSubject(undefined);
+    const patient$ = new BehaviorSubject(undefined);
 
-    //read the patient from the buffer or from the server
-    var patientData = _.find(this.patients$.getValue(), function (patient) {
-      return patient.resource.id === id
+    // read the patient from the buffer or from the server
+    const patientData = _.find(this.patients$.getValue(), function (patient) {
+      return patient.resource.id === id;
     });
 
     if (patientData) {
@@ -40,7 +40,7 @@ export class MainDataService {
       this.fhirClient.search({
         type: 'Patient',
         query: {
-          "_id": id
+          '_id': id
         }
       }).then((response) => {
         this.fetchingPatients = false;
@@ -62,13 +62,13 @@ export class MainDataService {
     this.fhirClient.search({
       type: 'Patient',
       query: {
-        "organization": "4301671"
+        'organization': '4301671'
       }
     }).then((response) => {
       this.fetchingPatients = false;
       if (response.data) {
         console.log(response.data);
-        this.patients$.next(_.filter(response.data.entry, function (o) { return o.resource.resourceType === "Patient" }));
+        this.patients$.next(_.filter(response.data.entry, function (o) { return o.resource.resourceType === 'Patient'; }));
       }
     }, (err) => {
       this.fetchingPatients = false;

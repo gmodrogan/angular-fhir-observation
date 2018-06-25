@@ -9,16 +9,16 @@ import { MainDataService } from '../services/main-data.service';
 })
 export class PatientDetailComponent implements OnInit {
 
-  @Input() patient: any
+  @Input() patient: any;
   constructor(private route: ActivatedRoute, private mainDataService: MainDataService) { }
 
   ngOnInit() {
     this.getPatient();
   }
 
-  getPatient(){
+  getPatient() {
     const id = this.route.snapshot.paramMap.get('id');
-    
+
     this.mainDataService.awaitPatient(id)
       .subscribe(patient => {
         this.patient = patient;
