@@ -10,6 +10,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { PatientNamePipe } from './util/patient-name/patient-name.pipe';
 import { VitalsignListComponent } from './vitalsign-list/vitalsign-list.component';
+import { VitalsignAddComponent } from './vitalsign-add/vitalsign-add.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,15 +20,22 @@ import { VitalsignListComponent } from './vitalsign-list/vitalsign-list.componen
     PatientDetailComponent,
     NotFoundComponent,
     PatientNamePipe,
-    VitalsignListComponent
+    VitalsignListComponent,
+    VitalsignAddComponent
 ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule
+  ],
+  entryComponents:[
+    VitalsignAddComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
+export class AppModule {
+
 }
