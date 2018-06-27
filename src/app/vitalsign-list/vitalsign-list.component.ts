@@ -43,14 +43,14 @@ export class VitalsignListComponent implements OnInit {
       }
     });
     modalRef.result.then((result) => {
-      var a = modalRef;
+      // var a = modalRef;
       // debugger;
-      
-      let operationOutcome$ = this.vitalsignService.createVitalsign({"aaa":"bbb"})
+
+      const operationOutcome$ = this.vitalsignService.createVitalsign({'aaa': 'bbb'});
       operationOutcome$.subscribe(operationOutcome => {
-        this.alertMessage = "Vitalsign created"
+        this.alertMessage = 'Vitalsign created';
         this.vitalsignService.refreshVitalsigns(this.patientId);
-        //destroy operationOutcome$
+        // destroy operationOutcome$
       });
 
 
