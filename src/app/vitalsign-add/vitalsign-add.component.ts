@@ -15,7 +15,8 @@ export class VitalsignAddComponent implements OnInit {
 
   constructor(
     public activeModal: NgbActiveModal,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+
   ) {
     this.createForm();
   }
@@ -26,8 +27,9 @@ export class VitalsignAddComponent implements OnInit {
       password: ''
     });
   }
-  private submitForm() {
+  public submitForm() {
     this.activeModal.close(this.myForm.value);
+
   }
 
   ngOnInit() {

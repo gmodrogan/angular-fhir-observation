@@ -1,16 +1,14 @@
 <div class="modal-header">
-    <h4 class="modal-title">Hi there!</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+  <h4 class="modal-title">Hello, {{name}}. Create an observation!</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+
+<form [formGroup]="myForm" (ngSubmit)="submitForm()">
   <div class="modal-body">
-    <p>Hello, {{name}}!</p>
-
-
-    <form [formGroup]="myForm" (ngSubmit)="submitForm()">
-        <div class="modal-boy">
-          <div class="container">
+    <!-- <div class="container">
             <div class="form-group">
               <label for="username">Username</label>
               <input type="text"
@@ -21,18 +19,10 @@
               <label for="password">Password</label>
               <input type="password" class="form-control">
             </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-success"
-            [disabled]="!myForm.valid">
-            Submit Form
-          </button>
-        </div>
-      </form>
-
-
+          </div> -->
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+    <button class="btn btn-success" [disabled]="!myForm.valid">Create</button>
   </div>
+</form>

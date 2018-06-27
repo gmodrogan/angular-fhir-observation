@@ -15,6 +15,8 @@ export class VitalsignListComponent implements OnInit {
 
   }
 
+  public alertMessage: string;
+
   private patientId: string;
 
   ngOnInit() {
@@ -29,6 +31,7 @@ export class VitalsignListComponent implements OnInit {
       .subscribe(vitalsigns => {
         // debugger;
         this.vitalsigns = vitalsigns;
+        // this.alertMessage = "Data read performed";
       });
   }
 
@@ -41,11 +44,20 @@ export class VitalsignListComponent implements OnInit {
     });
     modalRef.result.then((result) => {
       var a = modalRef;
-      debugger;
+      // debugger;
+      
+      let operationOutcome$ = this.vitalsignService.createVitalsign({"aaa":"bbb"})
+      operationOutcome$.subscribe(operationOutcome => {
+        this.alertMessage = "Vitalsign created"
+        this.vitalsignService.refreshVitalsigns(this.patientId);
+        //destroy operationOutcome$
+      });
+
+
     }, (reason) => {
-      debugger;
+      // debugger;
     });
-    modalRef.componentInstance.name = 'George';
+    modalRef.componentInstance.name = 'Test';
   }
 
 }
