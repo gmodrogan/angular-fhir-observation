@@ -12,6 +12,7 @@ import { PatientNamePipe } from './util/patient-name/patient-name.pipe';
 import { VitalsignListComponent } from './vitalsign-list/vitalsign-list.component';
 import { VitalsignAddComponent } from './vitalsign-add/vitalsign-add.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     NgbModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
