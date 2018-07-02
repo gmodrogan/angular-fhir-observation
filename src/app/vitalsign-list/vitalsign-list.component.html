@@ -1,6 +1,6 @@
 <div>
   <ngb-alert *ngIf="alertMessage" type="success" (close)="alertMessage = null">{{ alertMessage }}</ngb-alert>
-  <p>Vitalsign component</p>
+  <p>Vitalsign component ({{vitalsigns.length}})</p>
   <button class="btn btn-lg btn-outline-primary" (click)="open()">Launch demo modal</button>
   <table class="table">
     <thead>

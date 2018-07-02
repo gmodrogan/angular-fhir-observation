@@ -23,8 +23,7 @@ export class VitalsignAddComponent implements OnInit {
 
   private createForm() {
     this.myForm = this.formBuilder.group({
-      username: '',
-      password: ''
+      quantity: '80'
     });
   }
   public submitForm() {

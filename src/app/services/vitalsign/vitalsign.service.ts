@@ -1,16 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
-import { map, tap, catchError} from "rxjs/operators";
+import { map, tap, catchError } from "rxjs/operators";
 import { FhirClient } from 'ng-fhir/FhirClient';
 import * as _ from 'lodash';
 
+//TODO Split the Behavior Subject concept in a separate file, like a model and leave only the http calls in the service
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/fhir+json',
+    'Cache-Control': 'no-cache',
+    'prefer': 'representation'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class VitalsignService {
+
+  private generatedBehaviorSubjects$: BehaviorSubject<any>[] = [];
 
   private config: any = {
     baseUrl: 'https://hapi.fhir.org/baseDstu3/',
@@ -21,20 +31,149 @@ export class VitalsignService {
 
   }
 
-  awaitVitalsigns(patientId: string): Observable<any> {
-    debugger;
-    return this.httpClient.get<any>(`${this.config.baseUrl}/Observation?patient=${patientId}`).pipe(
-      tap(a => {
-        debugger;
+  awaitVitalsigns(patientId: string): BehaviorSubject<any> {
+    // return a BehaviorSubject, create a new one if not existing
+    let behaviorSubject$ = _.find(this.generatedBehaviorSubjects$, function (bs) {
+      return bs.getValue().patientId === patientId
+    });
+
+    if (!behaviorSubject$) {
+      behaviorSubject$ = new BehaviorSubject({
+        patientId: patientId,
+        data: []
+      });
+
+      this.generatedBehaviorSubjects$.push(behaviorSubject$);
+
+      // read the data only first time when requesting Observations for this patient.
+      // Then leave the component (consumer) to decide when the data should be refreshed.
+      this.refreshVitalsigns(behaviorSubject$);
+    }
+
+    return behaviorSubject$;
+  }
+
+  refreshVitalsigns(vitalsignsBS$: BehaviorSubject<any>) {
+    //clear the old data
+    let oldValue = vitalsignsBS$.getValue();
+    vitalsignsBS$.next({
+      patientId: oldValue.patientId,
+      data: []
+    });
+
+    let patientId = vitalsignsBS$.getValue().patientId;
+
+    this.httpClient.get<any>(`${this.config.baseUrl}/Observation?patient=${patientId}`, httpOptions).pipe(
+      tap(response => {
+        // debugger;
       }),
-      map(b => {
-        debugger;
-        
-        return b.entry;
+      map(response => {
+        // debugger;
+        let newVitalsigns = _.filter(response.entry, function (o) { return o.resource.resourceType === 'Observation'; });
+        let oldValue = vitalsignsBS$.getValue();
+
+        vitalsignsBS$.next({
+          patientId: oldValue.patientId,
+          data: _.concat(oldValue.data, newVitalsigns)
+        });
+
+        let nextPage = _.find(response.link, (o) => o.relation === "next")
+        if (nextPage) {
+          this.getNextPages(nextPage, vitalsignsBS$);
+        }
       })
-      
+
+    ).subscribe();
+  }
+
+  getNextPages(nextPage, vitalsignsBS$) {
+    let nextPageUrl = nextPage.url;
+
+    this.httpClient.get<any>(nextPageUrl, httpOptions).pipe(
+      tap(response => {
+        // debugger;
+      }),
+      map(response => {
+        // debugger;
+        let newVitalsigns = _.filter(response.entry, function (o) { return o.resource.resourceType === 'Observation'; });
+        let oldValue = vitalsignsBS$.getValue();
+
+        vitalsignsBS$.next({
+          patientId: oldValue.patientId,
+          data: _.concat(oldValue.data, newVitalsigns)
+        });
+
+        let nextPage = _.find(response.link, (o) => o.relation === "next")
+        if (nextPage) {
+          this.getNextPages(nextPage, vitalsignsBS$);
+        }
+      })
+
+    ).subscribe();
+  }
+
+  createVitalsign(vitalsign: any): Observable<any> {
+    let vitalsignFhir = {
+      "resourceType": "Observation",
+      // "id": "heart-rate",
+      "meta": {
+        "profile": [
+          "http://hl7.org/fhir/StructureDefinition/vitalsigns"
+        ]
+      },
+      "text": {
+        "status": "generated",
+        "div": ""
+      },
+      "status": "final",
+      "category": [
+        {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/observation-category",
+              "code": "vital-signs",
+              "display": "Vital Signs"
+            }
+          ],
+          "text": "Vital Signs"
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "http://loinc.org",
+            "code": "8867-4",
+            "display": "Heart rate"
+          }
+        ],
+        "text": "Heart rate"
+      },
+      "subject": {
+        "reference": "Patient/" + vitalsign.patientId
+      },
+      "effectiveDateTime": new Date().toJSON(),
+      "valueQuantity": {
+        "value": vitalsign.quantity,
+        "unit": "beats/minute",
+        "system": "http://unitsofmeasure.org",
+        "code": "/min"
+      }
+    };
+
+    return this.httpClient.post<any>(`${this.config.baseUrl}/Observation`, vitalsignFhir, httpOptions).pipe(
+      tap(response => {
+        // debugger;
+      }),
+      map(response => {
+        // debugger;
+        return response;
+      })
+
     )
   }
+
+
+
 }
 
 
