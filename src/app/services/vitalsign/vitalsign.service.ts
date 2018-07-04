@@ -140,13 +140,9 @@ export class VitalsignService {
       ],
       "code": {
         "coding": [
-          {
-            "system": "http://loinc.org",
-            "code": "8867-4",
-            "display": "Heart rate"
-          }
+          vitalsign.code
         ],
-        "text": "Heart rate"
+        "text": vitalsign.code.display
       },
       "subject": {
         "reference": "Patient/" + vitalsign.patientId
@@ -154,9 +150,9 @@ export class VitalsignService {
       "effectiveDateTime": new Date().toJSON(),
       "valueQuantity": {
         "value": vitalsign.quantity,
-        "unit": "beats/minute",
-        "system": "http://unitsofmeasure.org",
-        "code": "/min"
+        "unit": vitalsign.unit.unit,
+        "system": vitalsign.unit.system,
+        "code": vitalsign.unit.code
       }
     };
 
@@ -165,13 +161,62 @@ export class VitalsignService {
         // debugger;
       }),
       map(response => {
-        // debugger;
         return response;
       })
 
     )
   }
 
+  getUnits(codeSystem: any): BehaviorSubject<any> {
+    let units$ = new BehaviorSubject(undefined);
+
+    // hardcoded some units until I get more knowledge regarding CodeSystem / ValueSet / Unit / Terminology
+    setTimeout(function () {
+      // Heart rate
+      if(codeSystem.code === "8867-4"){
+        units$.next([{
+          "unit": "beats/minute",
+          "system": "http://unitsofmeasure.org",
+          "code": "/min"
+        }]);
+      }
+
+      // Body Temperature
+      if(codeSystem.code === "8310-5"){
+        units$.next([{
+          "unit": "degrees C",
+          "system": "http://unitsofmeasure.org",
+          "code": "Cel"
+        },{
+          "unit": "degrees K",
+          "system": "http://unitsofmeasure.org",
+          "code": "K"
+        }]);
+      }
+
+    }, 100)
+
+    return units$;
+  }
+
+  getCodeSystems(): BehaviorSubject<any> {
+    let codeSystems$ = new BehaviorSubject(undefined);
+
+    // hardcoded some units until I get more knowledge regarding CodeSystem / ValueSet / Unit / Terminology
+    setTimeout(function () {
+      codeSystems$.next([{
+        "system": "http://loinc.org",
+        "code": "8867-4",
+        "display": "Heart rate"
+      }, {
+        "system": "http://loinc.org",
+        "code": "8310-5",
+        "display": "Body temperature"
+      }]);
+    }, 100)
+
+    return codeSystems$;
+  }
 
 
 }

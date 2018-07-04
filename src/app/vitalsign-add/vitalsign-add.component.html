@@ -6,12 +6,36 @@
 </div>
 
 
-<form [formGroup]="myForm" (ngSubmit)="submitForm()">
+<form [formGroup]="myForm" (ngSubmit)="submitForm()" novalidate>
   <div class="modal-body">
     <div class="container">
-      <div class="form-group">
-        <label for="quantity">Value</label>
-        <input type="text" class="form-control" formControlName="quantity" />
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="quantity">Value</label>
+            <input type="text" class="form-control" formControlName="quantity" />
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="code">Code</label>
+            <select class="form-control" formControlName="code">
+              <option value='-1'>Select code...</option>
+              <option *ngFor="let code of codes" [ngValue]="code">{{code.display}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="form-group">
+              <label for="unit">unit</label>
+              <select class="form-control" formControlName="unit">
+                <option value='-1'>Select unit...</option>
+                <option *ngFor="let unit of units" [ngValue]="unit">{{unit.unit}}</option>
+              </select>
+            </div>
+          </div>
       </div>
     </div>
   </div>

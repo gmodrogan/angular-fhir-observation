@@ -14,7 +14,7 @@
         <td>{{i + 1}}</td>
         <td>{{vitalsign.resource.code.text}} ({{vitalsign.resource.code.coding[0].system}} --- {{vitalsign.resource.code.coding[0].code}})</td>
         <td>{{vitalsign.resource.effectiveDateTime | date:'medium'}}</td>
-        <td>{{vitalsign.resource.valueQuantity.value}}{{vitalsign.resource.valueQuantity.code}}</td>
+        <td>{{vitalsign.resource.valueQuantity.value}} {{vitalsign.resource.valueQuantity.unit}}</td>
       </tr>
     </tbody>
   </table>

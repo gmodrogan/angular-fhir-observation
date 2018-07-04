@@ -20,7 +20,7 @@ export class VitalsignListComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       this.patientId = this.route.snapshot.paramMap.get('id');
-      this.getVitalsigns();     
+      this.getVitalsigns();
     });
   }
 
@@ -55,7 +55,9 @@ export class VitalsignListComponent implements OnInit {
 
       let operationOutcome$ = this.vitalsignService.createVitalsign({
         patientId: this.patientId,
-        quantity: result.quantity
+        quantity: result.quantity,
+        code: result.code,
+        unit: result.unit
       })
 
       operationOutcome$.subscribe(operationOutcome => {
