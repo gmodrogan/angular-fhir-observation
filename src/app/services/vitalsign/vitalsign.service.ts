@@ -87,7 +87,7 @@ export class VitalsignService {
   }
 
   getNextPages(nextPage, vitalsignsBS$) {
-    let nextPageUrl = nextPage.url;
+    let nextPageUrl = nextPage.url.replace(/http/g, 'https');// temp fix
 
     this.httpClient.get<any>(nextPageUrl, httpOptions).pipe(
       tap(response => {
